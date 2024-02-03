@@ -1,8 +1,7 @@
 import styles from '../styles/SearchBar.module.css'
 
-//NEXT STEP: the default setting of the search bar should be a standard width saying "type here" or something like it inside and sit
-//in the center of the page
-//THEN: have it float to the top after the "change" 
+//NEXT STEP: the default setting of the search bar should sit in the center of the page
+//THEN: have it expand and float to the top after the "change" 
 
 function SearchBar() {
     function handleClick() {
