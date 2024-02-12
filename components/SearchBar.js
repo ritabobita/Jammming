@@ -1,8 +1,8 @@
 import styles from '../styles/SearchBar.module.css'
 
-//NEXT STEP: the default setting of the search bar should sit in the center of the page
-//THEN: have it expand and float to the top after the "change" 
-
+/*NEXT STEP: create a grid that changes as input is placed inside the search bar, the search bar should expand 
+             to the top of the page -- new grid should likely be attached to a new class to change on input
+ */
 function SearchBar() {
     function handleClick() {
         const search = document.querySelector(`.${styles.searchInput}`);
@@ -10,7 +10,7 @@ function SearchBar() {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={styles.searchContainer}>
             <input type='search' placeholder="Search Music.." className={styles.searchInput} onChange={handleClick} ></input>
         </div>
     )

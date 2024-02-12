@@ -1,13 +1,14 @@
 
-.container {
+.searchContainer {
     display: flex;
     justify-content: center;
     position: relative;
-    width: 500px;
-    height: 50px;
+    width: auto;
+    height: auto;
     background-color: black;
     align-items: center;
     padding: 1rem;
+    grid-area: search;
   
     .searchInput {
       font-size: 14px;
@@ -17,11 +18,13 @@
       left: 30px;
       box-sizing: border-box;
       border: black solid 1px;
-      justify-items: center;
     }
   
     .searchExpanded {
-      max-width: 500px;
+      /*max-width: 500px*/
+      min-width: -webkit-fill-available;
+      transition: all 0.5s ease;
+      size: 500px;
       opacity: 1;
     }
   }

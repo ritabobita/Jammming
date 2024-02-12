@@ -1,9 +1,22 @@
+/*@import "./SearchBar.module.css"; idk if this needs to be here*/
+
 .container {
   min-height: 100vh;
   padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template: 45% 10% 45% / repeat(3, 12.5rem);
+  grid-template-areas: ". . ."
+                       ". search ."
+                       ". . .";
+  grid-gap: 1rem;
+  width: 100%;
+  height: auto;
+  padding: 1.875rem;
   justify-content: center;
-  align-items: center;
   border: black solid 1px;
 }
+
+
+
+/*idea to create a grid css layout for the home page, Home grid with search bar inside and then change class to be able to move 
+the search bar to the top of the page and also better organize the rest of the page as I build it*/
