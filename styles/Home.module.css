@@ -2,18 +2,18 @@
 
 .container {
   min-height: 100vh;
-  padding: 0 0.5rem;
   display: grid;
-  grid-template: 45% 10% 45% / repeat(3, 12.5rem);
+  grid-template: 20rem 5rem 20rem / 15rem 20rem 15rem;
   grid-template-areas: ". . ."
                        ". search ."
                        ". . .";
   grid-gap: 1rem;
-  width: 100%;
-  height: auto;
   padding: 1.875rem;
-  justify-content: center;
   border: black solid 1px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
 }
 
 

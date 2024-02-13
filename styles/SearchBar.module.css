@@ -11,20 +11,16 @@
     grid-area: search;
   
     .searchInput {
-      font-size: 14px;
-      max-width: 200px;
-      padding: 5px;
-      transition: all 0.5s ease;
-      left: 30px;
+      font-size: 0.875rem;
+      width: 12.5rem;
+      padding: 0.313rem;
+      transition: width 0.5s ease;
       box-sizing: border-box;
       border: black solid 1px;
     }
   
     .searchExpanded {
-      /*max-width: 500px*/
-      min-width: -webkit-fill-available;
-      transition: all 0.5s ease;
-      size: 500px;
-      opacity: 1;
+      width: 20rem;
+      opacity: 1; 
     }
   }
