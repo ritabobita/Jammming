@@ -12,15 +12,11 @@
   
     .searchInput {
       font-size: 0.875rem;
-      width: 12.5rem;
+      width: 50%;
       padding: 0.313rem;
       transition: width 0.5s ease;
       box-sizing: border-box;
       border: black solid 1px;
     }
   
-    .searchExpanded {
-      width: 20rem;
-      opacity: 1; 
-    }
   }
