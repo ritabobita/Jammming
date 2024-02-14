@@ -7,19 +7,14 @@ import SearchBar from '../components/SearchBar';
 export default function Home() {
   const [searchInput, setSearchInput] = useState(false);
 
-  //useEffect? -- https://react.dev/reference/react/useEffect
-  useEffect(() => {
-
-  })
-
   function handleSearchInput() {
-      setSearchInput(true);
-  }
+    setSearchInput(true);
+}
 
   console.log("Component re-rendered")
 
   return (
-      <div className={`${searchInput ? styles.containerChange : styles.container }`}>
+      <div className= {`${searchInput ? styles.containerChange : styles.container }`}>
           <Head>
               <title>Jammming</title>
               <link rel="icon" href="/favicon.ico" />
