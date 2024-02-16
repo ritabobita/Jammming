@@ -2,6 +2,8 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
+import Playlist from '../components/Playlist'
+import SearchResults from '../components/SearchResults';
 
 
 export default function Home() {
@@ -20,6 +22,8 @@ export default function Home() {
               <link rel="icon" href="/favicon.ico" />
           </Head>
           <SearchBar onSearchInputChange={handleSearchInput} />
+          <SearchResults/>
+          <Playlist/>
       </div>
   );
 }

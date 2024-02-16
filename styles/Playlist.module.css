@@ -1,0 +1,9 @@
+
+.playlistContainer {
+    background-color: black;
+    grid-area: savePlaylist;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+}

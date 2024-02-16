@@ -1,0 +1,10 @@
+.trackContainer {
+    background-color: gray;
+    height: 10%;
+    width: 100%;
+    justify-self: center;
+}
+
+.trackContainer li {
+    list-style: none;
+}

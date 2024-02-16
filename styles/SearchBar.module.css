@@ -1,6 +1,7 @@
 
 .searchContainer {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     position: relative;
     width: auto;
@@ -18,5 +19,14 @@
       box-sizing: border-box;
       border: black solid 1px;
     }
-  
+  }
+
+  .noButton {
+    display: none;
+  }
+
+  .searchButton{
+    display: block;
+    grid-area: searchButton;
+    margin: .25rem;
   }

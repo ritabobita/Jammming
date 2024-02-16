@@ -1,0 +1,5 @@
+
+.resultsContainer {
+    background-color: black;
+    grid-area: results;
+}
