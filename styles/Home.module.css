@@ -3,28 +3,7 @@
 .container {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 15rem 20rem 15rem; 
-  grid-template-rows: 20rem 5rem 20rem;
-  /*grid-template: 20rem 5rem 20rem / 15rem 20rem 15rem;*/
-  grid-template-areas: ". . ."
-                       ". search ."
-                       ". . .";
-  grid-gap: 1rem;
-  padding: 1.875rem;
-  border: black solid 1px;
-  box-sizing: border-box;
-  justify-content: center;
-  align-content: center;
-  width: 100%;
-  transition: all 1s ease;
-}
-  
-.containerChange {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(4, 25%);
-  grid-template-rows: repeat(3, 10%) 70%;
-  /*grid-template: repeat(3, 10%) 70% / repeat(4, 25%);*/
+  grid-template: repeat(3, 10%) 70% / repeat(4, 25%);
   grid-template-areas: "header header header header"
                        "search search search search"
                        ". searchButton searchButton ."

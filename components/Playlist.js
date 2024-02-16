@@ -3,12 +3,10 @@ import Tracklist from '../components/Tracklist';
 
 function Playlist() {
 
-
-
     return (
         <div className={styles.playlistContainer}>
             <Tracklist />
-            <button>Save To Spotify</button>
+            <button  type='submit'>Save To Spotify</button>
         </div>
     )
 }

@@ -21,10 +21,6 @@
     }
   }
 
-  .noButton {
-    display: none;
-  }
-
   .searchButton{
     display: block;
     grid-area: searchButton;
