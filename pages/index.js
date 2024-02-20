@@ -9,14 +9,20 @@ import SearchResults from '../components/SearchResults';
 
 export default function Home() {
   const [searchInput, setSearchInput] = useState("")
-  const [button, setButton] = useState(false)
+  //const [button, setButton] = useState(false) //may need results/setResults setState to empty array (useState([])) to 
+  //replace this button state
+  const [results, setResults] = useState([])
+  //function handleClick() {results = findTrack(searchInput) setResults(results)}
+  //LEFT OFF HERE
 
   function handleSearchInput(input) {
     setSearchInput(input);
   }
 
   function handleClick() {
-    setButton(true)
+    //setButton(true);
+    const results = findTrack(searchInput)
+    setResults(results)
   }
 
   const tracks = [{
@@ -41,18 +47,19 @@ export default function Home() {
 
   function findTrack(input) {
     const filteredTracks = tracks.filter(track =>
-    (track.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-      track.artist.toLowerCase().includes(searchInput.toLowerCase()) ||
-      track.album.toLowerCase().includes(searchInput.toLowerCase())
+    (track.name.toLowerCase().includes(input.toLowerCase()) ||
+      track.artist.toLowerCase().includes(input.toLowerCase()) ||
+      track.album.toLowerCase().includes(input.toLowerCase())
     ));
 
-    const trackList = filteredTracks.map(track => <li key={track.id}>{track.name} {track.artist} {track.album}</li>)
-    if (button) {
-      return <ul>{trackList}</ul> 
-    }
+    //if (results) {
+      const trackList = filteredTracks.map(track => <li key={track.id}>{track.name} {track.artist} {track.album}</li>)
+      return <ul>{trackList}</ul>
+    //}
+    //return null
   }
 
-  const searchResults = findTrack(searchInput)
+  //const searchResults = findTrack(searchInput)
 
 
   return (
@@ -62,7 +69,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
-      <SearchResults searchResults={searchResults} />
+      {results && <SearchResults searchResults={results} />}
       <Playlist />
     </div>
   );

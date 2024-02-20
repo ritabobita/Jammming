@@ -6,16 +6,12 @@ import SearchResults from '../components/SearchResults.js';
 data in either json or array format (focus on how your components will interact with the data rather than on how they will 
 retrieve data from APIs)
  */
-function SearchBar({ onSearchInputChange, onButtonClick }) {
+function SearchBar({ onSearchInputChange, onButtonClick, setResults }) {
 
     const handleChange = (e) => {
         const value = e.target.value
-        if (onButtonClick) { 
-            onSearchInputChange(value) 
-        }
-    }
-
-
+        onSearchInputChange(value) 
+}
 
     return (
         <div className={styles.searchContainer}>
