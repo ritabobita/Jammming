@@ -1,12 +1,9 @@
 import styles from '../styles/SearchBar.module.css'
-import { useState } from 'react';
-import SearchResults from '../components/SearchResults.js';
 
-/*NEXT STEP: continue creating static components -- might need to complete css asthetic a little more, but being hardcoding mock 
-data in either json or array format (focus on how your components will interact with the data rather than on how they will 
-retrieve data from APIs)
+/*NEXT STEP: css update search results portion -- then begin to create/modify playlist creation portion.. going to need input
+for playlist naming oooh and also add buttons needed for searchresults portion
  */
-function SearchBar({ onSearchInputChange, onButtonClick, setResults }) {
+function SearchBar({ onSearchInputChange, onButtonClick }) {
 
     const handleChange = (e) => {
         const value = e.target.value

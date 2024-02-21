@@ -1,26 +1,19 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import Playlist from '../components/Playlist'
 import SearchResults from '../components/SearchResults';
-//import Tracklist from '../components/Tracklist';
 
 
 export default function Home() {
   const [searchInput, setSearchInput] = useState("")
-  //const [button, setButton] = useState(false) //may need results/setResults setState to empty array (useState([])) to 
-  //replace this button state
   const [results, setResults] = useState([])
-  //function handleClick() {results = findTrack(searchInput) setResults(results)}
-  //LEFT OFF HERE
 
   function handleSearchInput(input) {
     setSearchInput(input);
   }
-
   function handleClick() {
-    //setButton(true);
     const results = findTrack(searchInput)
     setResults(results)
   }
@@ -51,16 +44,13 @@ export default function Home() {
       track.artist.toLowerCase().includes(input.toLowerCase()) ||
       track.album.toLowerCase().includes(input.toLowerCase())
     ));
-
-    //if (results) {
-      const trackList = filteredTracks.map(track => <li key={track.id}>{track.name} {track.artist} {track.album}</li>)
-      return <ul>{trackList}</ul>
-    //}
-    //return null
+    const trackList = filteredTracks.map(track => <li key={track.id}>Song Name: {track.name}<br/>Artist: {track.artist} Album: {track.album} 
+                                                  <button>+</button></li>)
+    const trackListUl = <ul>{trackList}</ul>
+    if (input.length > 0) {
+      return trackListUl
+    } //can use this to provide else for non-searches and possibly searches that don't match the track
   }
-
-  //const searchResults = findTrack(searchInput)
-
 
   return (
     <div className={styles.container}>
@@ -69,7 +59,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
-      {results && <SearchResults searchResults={results} />}
+      <SearchResults searchResults={results} />
       <Playlist />
     </div>
   );
