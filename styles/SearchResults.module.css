@@ -1,17 +1,49 @@
+/* Color Palette
+Pastel Red: #E06651
+Brown: #A16B62
+Slate Blue: #618B79
+Gray: #615553
+Light Green: #51E0A3
+
+Font
+
+*/
+
 
 .resultsContainer {
-    background-color: white;
+    background-color: #000000;
     grid-area: results;
+    
+}
+
+.resultsContainer h1 {
+    color: white;
+    text-align: center;
 }
 
 .results {
-    background-color: gray;
+    background-color: #E06650;
 }
 
 .results ul {
     list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.results li {
+    color: white;
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    justify-content: space-between;
 }
 
 .results button {
-    background-color: aliceblue;
+    background-color:  #536160;
+    height: 1.5rem;
+    width: 1.5rem;
 }
