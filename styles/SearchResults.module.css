@@ -6,14 +6,13 @@ Gray: #615553
 Light Green: #51E0A3
 
 Font
-
-*/
-
+font-family: "Open Sans", sans-serif;*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 .resultsContainer {
+    font-family: "Open Sans", sans-serif;
     background-color: #000000;
     grid-area: results;
-    
 }
 
 .resultsContainer h1 {
@@ -22,12 +21,13 @@ Font
 }
 
 .results {
-    background-color: #E06650;
+    overflow: scroll;
 }
 
 .results ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -35,11 +35,14 @@ Font
 }
 
 .results li {
+    background-color: #E06650;
+    min-height: 5rem;
     color: white;
     display: flex;
     align-items: center;
-    margin: 1rem;
+    margin: .5rem 1rem;
     justify-content: space-between;
+    padding: 0rem 1rem;
 }
 
 .results button {

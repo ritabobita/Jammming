@@ -5,7 +5,6 @@ import SearchBar from '../components/SearchBar';
 import Playlist from '../components/Playlist'
 import SearchResults from '../components/SearchResults';
 
-
 export default function Home() {
   const [searchInput, setSearchInput] = useState("")
   const [results, setResults] = useState([])
