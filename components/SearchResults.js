@@ -1,6 +1,7 @@
 import styles from '../styles/SearchResults.module.css'
 
 function SearchResults({searchResults}) {
+    
 
     return (
         <div className={styles.resultsContainer}>

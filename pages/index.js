@@ -1,11 +1,13 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
 import { useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import Playlist from '../components/Playlist'
 import SearchResults from '../components/SearchResults';
 
 export default function Home() {
+  
+  //SearchBar & SearchResults
   const [searchInput, setSearchInput] = useState("")
   const [results, setResults] = useState([])
 
@@ -44,12 +46,23 @@ export default function Home() {
       track.album.toLowerCase().includes(input.toLowerCase())
     ));
     const trackList = filteredTracks.map(track => <li key={track.id}>Song Name: {track.name}<br/>Artist: {track.artist} Album: {track.album} 
-                                                  <button>+</button></li>)
+                                                  <button type="button" onClick={() => handleAddButton(track.id)}>+</button></li>)
     const trackListUl = <ul>{trackList}</ul>
     if (input.length > 0) {
       return trackListUl
     } //can use this to provide else for non-searches and possibly searches that don't match the track
   }
+
+  //Playlist, TrackList & Track (Playlist Creation)
+  const [playlist, setPlaylist] = useState([])
+
+  const handleAddButton = (trackId) => {
+    const addTrack = tracks.find(track => track.id === trackId)
+    setPlaylist(prevTracks => [...prevTracks, addTrack])
+  }
+    const trackPick = playlist.map(playlistItem => <li key = {playlistItem.id}>{playlistItem.name} - {playlistItem.artist}</li>)
+    const playlistUl = <ul>{trackPick}</ul>
+
 
   return (
     <div className={styles.container}>
@@ -59,7 +72,7 @@ export default function Home() {
       </Head>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
       <SearchResults searchResults={results} />
-      <Playlist />
+      <Playlist playlist={playlistUl} />
     </div>
   );
 }
