@@ -5,7 +5,7 @@ import Playlist from './Playlist';
 function Track({playlist}) {
     return (
         <div className={styles.trackContainer}>
-            {playlist}
+            <ul>{playlist}</ul>
         </div>
     )
 }

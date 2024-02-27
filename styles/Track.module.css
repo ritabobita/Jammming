@@ -1,10 +1,25 @@
 .trackContainer {
-    background-color: gray;
     height: 10%;
     width: 100%;
-    justify-self: center;
 }
 
 .trackContainer li {
     list-style: none;
+    background-color: #E06650;
+    min-height: 5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin: .5rem 1rem;
+    justify-content: space-between;
+    padding: 0rem 1rem;
 }
+
+.trackContainer button {
+    background-color:  #536160;
+    height: 1.5rem;
+    width: 1.5rem;
+    padding: 0;
+    margin: 0;
+}
+

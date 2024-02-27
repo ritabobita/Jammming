@@ -7,7 +7,7 @@ function Tracklist({playlist}) {
     return (
         //prob turn this into a list format over div or have list inside div if it is a container
         <div className={styles.tracklistContainer}>
-            <Track playlist={playlist}/>
+           <Track playlist={playlist}/>
         </div>
     )
 }

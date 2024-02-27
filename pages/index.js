@@ -67,8 +67,7 @@ export default function Home() {
       )
   }
     const trackPick = playlist.map(playlistItem => <li key = {playlistItem.id}>Song Name: {playlistItem.name}<br/>
-    Artist: {playlistItem.artist} Album: {playlistItem.album}</li>)
-    const playlistUl = <ul>{trackPick}</ul>
+    Artist: {playlistItem.artist} Album: {playlistItem.album} <button type="button">-</button></li>)
 
   return (
     <div className={styles.container}>
@@ -78,7 +77,7 @@ export default function Home() {
       </Head>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
       <SearchResults searchResults={results} />
-      <Playlist playlist={playlistUl} />
+      <Playlist playlist={trackPick} />
     </div>
   );
 }

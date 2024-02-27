@@ -1,12 +1,21 @@
 
 
 .tracklistContainer {
-    background-color: white;
-    height: 40%;
-    width: 90%;
-    justify-self: center;
+    background-color: black;
     display: flex;
     justify-content: center;
-    align-items:flex-start;
+    align-items: flex-start;
     overflow: scroll;
+    height: 70%;
+}
+
+.tracklistContainer ul {
+    margin: 0;
+    padding: 0;
+    width: 25.875rem;
+    height: auto;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
