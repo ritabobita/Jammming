@@ -58,11 +58,17 @@ export default function Home() {
 
   const handleAddButton = (trackId) => {
     const addTrack = tracks.find(track => track.id === trackId)
-    setPlaylist(prevTracks => [...prevTracks, addTrack])
+    setPlaylist(prevTracks => {
+      if (prevTracks.includes(addTrack)) {
+        return [...prevTracks]
+      } else {
+        return [...prevTracks, addTrack]
+      }}
+      )
   }
-    const trackPick = playlist.map(playlistItem => <li key = {playlistItem.id}>{playlistItem.name} - {playlistItem.artist}</li>)
+    const trackPick = playlist.map(playlistItem => <li key = {playlistItem.id}>Song Name: {playlistItem.name}<br/>
+    Artist: {playlistItem.artist} Album: {playlistItem.album}</li>)
     const playlistUl = <ul>{trackPick}</ul>
-
 
   return (
     <div className={styles.container}>
