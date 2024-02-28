@@ -1,10 +1,8 @@
 .trackContainer {
-    height: 10%;
-    width: 100%;
+    overflow: scroll;
 }
 
 .trackContainer li {
-    list-style: none;
     background-color: #E06650;
     min-height: 5rem;
     color: white;
@@ -17,9 +15,8 @@
 
 .trackContainer button {
     background-color:  #536160;
-    height: 1.5rem;
-    width: 1.5rem;
-    padding: 0;
-    margin: 0;
+    max-height: 1.5rem;
+    max-width: 1.5rem;
+    margin: 0; 
 }
 

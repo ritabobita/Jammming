@@ -67,7 +67,11 @@ export default function Home() {
       )
   }
     const trackPick = playlist.map(playlistItem => <li key = {playlistItem.id}>Song Name: {playlistItem.name}<br/>
-    Artist: {playlistItem.artist} Album: {playlistItem.album} <button type="button">-</button></li>)
+    Artist: {playlistItem.artist} Album: {playlistItem.album} <button type="button" onClick={() => handleRemoveButton(playlistItem.id)}>-</button></li>)
+
+    const handleRemoveButton = (trackId) => {
+      setPlaylist(prevTracks => prevTracks.filter(track => track.id !== trackId))
+    } //LEFT OFF HERE -- analyze
 
   return (
     <div className={styles.container}>
