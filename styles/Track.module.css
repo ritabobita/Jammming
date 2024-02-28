@@ -1,6 +1,3 @@
-.trackContainer {
-    overflow: scroll;
-}
 
 .trackContainer li {
     background-color: #E06650;
@@ -8,7 +5,7 @@
     color: white;
     display: flex;
     align-items: center;
-    margin: .5rem 1rem;
+    margin: 0 1rem 1rem;
     justify-content: space-between;
     padding: 0rem 1rem;
 }

@@ -55,6 +55,7 @@ export default function Home() {
 
   //Playlist, TrackList & Track (Playlist Creation)
   const [playlist, setPlaylist] = useState([])
+  const [playlistName, setPlaylistName] = useState('')
 
   const handleAddButton = (trackId) => {
     const addTrack = tracks.find(track => track.id === trackId)
@@ -73,6 +74,12 @@ export default function Home() {
       setPlaylist(prevTracks => prevTracks.filter(track => track.id !== trackId))
     } //LEFT OFF HERE -- analyze
 
+    const handlePlaylistName = (input) => {
+      setPlaylistName(input)
+    } //LEFT OFF HERE TOO -- functionality is the same as the searchInput
+    //console.log(playlistName) it knows I what I type in now.. just need to attach playlistName likely to a function to hold onto the name
+    // later
+
   return (
     <div className={styles.container}>
       <Head>
@@ -81,7 +88,7 @@ export default function Home() {
       </Head>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
       <SearchResults searchResults={results} />
-      <Playlist playlist={trackPick} />
+      <Playlist playlist={trackPick} playlistName={handlePlaylistName}/>
     </div>
   );
 }

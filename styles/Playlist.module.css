@@ -13,20 +13,20 @@ font-family: "Open Sans", sans-serif;*/
     background-color: black;
     grid-area: savePlaylist;
     font-family: "Open Sans", sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .playlistContainer input {
+    display: block;
     width: 22rem;
     height: 2.7rem;
-    margin: 1.14rem 0;
+    margin: 1.38rem auto;
     font-size: 18px;
+    text-align: center;
 }
 
 .playlistContainer button {
-    margin: 1.34rem;
+    display: block;
+    margin: 1rem auto;
     height: 2rem;
     width: 12rem;
     font-family: "Open Sans", sans-serif;
