@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
 import Playlist from '../components/Playlist'
 import SearchResults from '../components/SearchResults';
 
 export default function Home() {
-  
+
   //SearchBar & SearchResults
   const [searchInput, setSearchInput] = useState("")
   const [results, setResults] = useState([])
@@ -14,9 +14,13 @@ export default function Home() {
   function handleSearchInput(input) {
     setSearchInput(input);
   }
+
   function handleClick() {
-    const results = findTrack(searchInput)
-    setResults(results)
+    //const results = findTrack(searchInput)
+    const apiResponse = searchTracks(searchInput)
+    setResults(apiResponse)
+
+    // console.log(window.location)
   }
 
   const tracks = [{
@@ -42,9 +46,73 @@ export default function Home() {
   }
   ]
 
-  //Paradise City by GNR = "spotify:track:6eN1f9KNmiWEhpE2RhQqB5" / Hey Lou by LouisOfMan = "spotify:track:1JrLzZwjwOssxX11afM3XS" 
-  // War by Idles = "spotify:track:2kYn0VPQY1iTY3XpCvUaPt" 
-  //const uri = ["spotify:track:6eN1f9KNmiWEhpE2RhQqB5", "spotify:track:1JrLzZwjwOssxX11afM3XS", "spotify:track:2kYn0VPQY1iTY3XpCvUaPt"]
+  //fetch
+
+  function searchTracks(query) {
+    const accessToken = getAccessToken()
+    if (!accessToken) {
+      throw new Error('Access token not found')
+    }
+    fetch(`https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(query)}`, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      }
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          console.log(data)
+          setResults(data.tracks.items);
+        })
+      }
+    })
+  }
+
+  function getAccessToken() {
+    const currentUri = window.location.href
+    const uriParts = currentUri.split('#');
+    if (uriParts.length > 1) {
+      const hashPart = uriParts[1];
+      const keyValuePairs = hashPart.split('&');
+      for (const pair of keyValuePairs) {
+        const [key, value] = pair.split('=');
+        if (key === 'access_token') {
+          return decodeURIComponent(value);
+        }
+      }
+    }
+    return null;
+  }
+
+  function generateRandomString(length) {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  function requestAuthorization() {
+
+    var client_id = 'a4b4626f8e5f4d00a3fb8c229d812923';
+    var redirect_uri = 'http://localhost:3000/';
+
+    var stateKey = 'spotify_auth_state';
+    var state = generateRandomString(16);
+
+    localStorage.setItem(stateKey, state);
+    var scope = 'user-read-private user-read-email playlist-modify-private playlist-modify-public';
+
+    var url = 'https://accounts.spotify.com/authorize';
+    url += '?response_type=token';
+    url += '&client_id=' + encodeURIComponent(client_id);
+    url += '&scope=' + encodeURIComponent(scope);
+    url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
+    url += '&state=' + encodeURIComponent(state);
+
+    window.location = url
+  }
 
   function findTrack(input) {
     const filteredTracks = tracks.filter(track =>
@@ -52,8 +120,8 @@ export default function Home() {
       track.artist.toLowerCase().includes(input.toLowerCase()) ||
       track.album.toLowerCase().includes(input.toLowerCase())
     ));
-    const trackList = filteredTracks.map(track => <li key={track.id}>Song Name: {track.name}<br/>Artist: {track.artist} Album: {track.album} 
-                                                  <button type="button" onClick={() => handleAddButton(track.id)}>+</button></li>)
+    const trackList = filteredTracks.map(track => <li key={track.id}>Song Name: {track.name}<br />Artist: {track.artist} Album: {track.album}
+      <button type="button" onClick={() => handleAddButton(track.id)}>+</button></li>)
     const trackListUl = <ul>{trackList}</ul>
     if (input.length > 0) {
       return trackListUl
@@ -65,35 +133,36 @@ export default function Home() {
   const [playlistName, setPlaylistName] = useState('')
 
   const handleAddButton = (trackId) => {
-    const addTrack = tracks.find(track => track.id === trackId)
+    const addTrack = results.find(track => track.uri === trackId)
     setPlaylist(prevTracks => {
-      if (prevTracks.some(track => track.id === addTrack.id)) {
+      if (prevTracks.some(track => track.uri === addTrack.uri)) {
         console.log(addTrack)
         return [...prevTracks]
       } else {
         return [...prevTracks, addTrack]
-      }}
-      )
-  }
-    const trackPick = playlist.map(playlistItem => <li key = {playlistItem.id}>Song Name: {playlistItem.name}<br/>
-    Artist: {playlistItem.artist} Album: {playlistItem.album} <button type="button" onClick={() => handleRemoveButton(playlistItem.id)}>-</button></li>)
-
-    const handleRemoveButton = (trackId) => {
-      setPlaylist(prevTracks => prevTracks.filter(track => track.id !== trackId))
-    } 
-
-    const handlePlaylistName = (newName) => {
-      setPlaylistName(newName)
-    } 
-
-    //Spotify functions
-
-    const uriArray = () => {
-      const uriPlaylist = playlist.map(track => track.uri)
-      let array = [...uriPlaylist]
-      console.log(array)
+      }
     }
-    uriArray()
+    )
+  }
+  const trackPick = playlist.map(playlistItem => <li key={playlistItem.uri}>Song Name: {playlistItem.name}<br />
+    Artist: {playlistItem.artist} Album: {playlistItem.album} <button type="button" onClick={() => handleRemoveButton(playlistItem.uri)}>-</button></li>)
+
+  const handleRemoveButton = (trackId) => {
+    setPlaylist(prevTracks => prevTracks.filter(track => track.uri  !== trackId))
+  }
+
+  const handlePlaylistName = (newName) => {
+    setPlaylistName(newName)
+  }
+
+  //Spotify functions
+
+  const uriArray = () => {
+    const uriPlaylist = playlist.map(track => track.uri)
+    let array = [...uriPlaylist]
+    console.log(array)
+  }
+  //uriArray()
 
   return (
     <div className={styles.container}>
@@ -101,9 +170,10 @@ export default function Home() {
         <title>Jammming</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <button onClick={requestAuthorization}>Log In</button>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
-      <SearchResults searchResults={results} />
-      <Playlist playlist={trackPick} newPlaylist={playlistName} onNewPlaylistName={handlePlaylistName}/>
+      <SearchResults searchResults={results} handleAddButton={handleAddButton} />
+      <Playlist playlist={trackPick} uriArray={uriArray} newPlaylist={playlistName} onNewPlaylistName={handlePlaylistName} />
     </div>
   );
 }
