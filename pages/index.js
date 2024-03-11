@@ -19,32 +19,7 @@ export default function Home() {
     //const results = findTrack(searchInput)
     const apiResponse = searchTracks(searchInput)
     setResults(apiResponse)
-
-    // console.log(window.location)
-  }
-
-  const tracks = [{
-    name: 'Paradise City',
-    artist: "Guns N' Roses",
-    album: 'Appetite For Destruction',
-    id: 0,
-    uri: "spotify:track:6eN1f9KNmiWEhpE2RhQqB5"
-  },
-  {
-    name: 'Hey Lou',
-    artist: 'Lewis OfMan, Camille Jansen',
-    album: 'Cristal Medium Blue',
-    id: 1,
-    uri: "spotify:track:1JrLzZwjwOssxX11afM3XS"
-  },
-  {
-    name: 'War',
-    artist: 'IDLES',
-    album: 'Ultra Mono',
-    id: 2,
-    uri: "spotify:track:2kYn0VPQY1iTY3XpCvUaPt"
-  }
-  ]
+    }
 
   //fetch
 
@@ -60,7 +35,7 @@ export default function Home() {
     }).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          console.log(data)
+          console.log(data.tracks.items)
           setResults(data.tracks.items);
         })
       }
@@ -114,41 +89,37 @@ export default function Home() {
     window.location = url
   }
 
-  function findTrack(input) {
-    const filteredTracks = tracks.filter(track =>
-    (track.name.toLowerCase().includes(input.toLowerCase()) ||
-      track.artist.toLowerCase().includes(input.toLowerCase()) ||
-      track.album.toLowerCase().includes(input.toLowerCase())
-    ));
-    const trackList = filteredTracks.map(track => <li key={track.id}>Song Name: {track.name}<br />Artist: {track.artist} Album: {track.album}
-      <button type="button" onClick={() => handleAddButton(track.id)}>+</button></li>)
-    const trackListUl = <ul>{trackList}</ul>
-    if (input.length > 0) {
-      return trackListUl
-    } //can use this to provide else for non-searches and possibly searches that don't match the track
-  }
+  // function findTrack(input) {
+  //   const filteredTracks = tracks.filter(track =>
+  //   (track.name.toLowerCase().includes(input.toLowerCase()) ||
+  //     track.artist.toLowerCase().includes(input.toLowerCase()) ||
+  //     track.album.toLowerCase().includes(input.toLowerCase())
+  //   ));
+  //   const trackList = filteredTracks.map(track => <li key={track.id}>Song Name: {track.name}<br />Artist: {track.artist} Album: {track.album}
+  //     <button type="button" onClick={() => handleAddButton(track.id)}>+</button></li>)
+  //   const trackListUl = <ul>{trackList}</ul>
+  //   if (input.length > 0) {
+  //     return trackListUl
+  //   } //can use this to provide else for non-searches and possibly searches that don't match the track
+  // }
 
   //Playlist, TrackList & Track (Playlist Creation)
   const [playlist, setPlaylist] = useState([])
   const [playlistName, setPlaylistName] = useState('')
 
-  const handleAddButton = (trackId) => {
-    const addTrack = results.find(track => track.uri === trackId)
+  const handleAddButton = (trackURI) => {
+    const addTrack = results.find(result => result.uri === trackURI);
     setPlaylist(prevTracks => {
-      if (prevTracks.some(track => track.uri === addTrack.uri)) {
-        console.log(addTrack)
-        return [...prevTracks]
+      if (!prevTracks.some(prevTrack => prevTrack.uri === addTrack.uri)) {
+        setPlaylist([...prevTracks, addTrack])
       } else {
-        return [...prevTracks, addTrack]
+        setPlaylist([...prevTracks])
       }
-    }
-    )
-  }
-  const trackPick = playlist.map(playlistItem => <li key={playlistItem.uri}>Song Name: {playlistItem.name}<br />
-    Artist: {playlistItem.artist} Album: {playlistItem.album} <button type="button" onClick={() => handleRemoveButton(playlistItem.uri)}>-</button></li>)
+    })
+  };
 
-  const handleRemoveButton = (trackId) => {
-    setPlaylist(prevTracks => prevTracks.filter(track => track.uri  !== trackId))
+  const handleRemoveButton = (trackURI) => {
+    setPlaylist(prevTracks => prevTracks.filter(track => track.uri !== trackURI))
   }
 
   const handlePlaylistName = (newName) => {
@@ -173,7 +144,8 @@ export default function Home() {
       <button onClick={requestAuthorization}>Log In</button>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
       <SearchResults searchResults={results} handleAddButton={handleAddButton} />
-      <Playlist playlist={trackPick} uriArray={uriArray} newPlaylist={playlistName} onNewPlaylistName={handlePlaylistName} />
+      <Playlist playlist={playlist} uriArray={uriArray} newPlaylist={playlistName} onNewPlaylistName={handlePlaylistName} 
+      onHandleRemoveButton={handleRemoveButton} />
     </div>
   );
 }
