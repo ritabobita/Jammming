@@ -1,8 +1,5 @@
 import styles from '../styles/SearchBar.module.css'
 
-/*NEXT STEP: begin to create/modify playlist creation portion.. going to need input for playlist naming oooh and also add buttons 
-needed for searchresults portion
- */
 function SearchBar({ onSearchInputChange, onButtonClick }) {
 
     const handleChange = (e) => {

@@ -1,7 +1,7 @@
 import styles from '../styles/Playlist.module.css'
 import Tracklist from '../components/Tracklist';
 
-function Playlist({playlist, onNewPlaylistName, newPlaylist, onHandleRemoveButton, uriArray}) {
+function Playlist({playlist, onNewPlaylistName, onHandleRemoveButton, savePlaylist, newPlaylist, uriArray}) {
 
     function handleChange(e) {
         const value = e.target.value;
@@ -12,7 +12,7 @@ function Playlist({playlist, onNewPlaylistName, newPlaylist, onHandleRemoveButto
         <div className={styles.playlistContainer}>
             <input type='text' placeholder='Name Playlist...' onChange={handleChange}></input>
             <Tracklist playlist={playlist} onHandleRemoveButton={onHandleRemoveButton}/>
-            <button  type='button' onClick={() => console.log(newPlaylist)} /*onClick={uriArray} WORKS HERE TOO*/>Save To Spotify</button>
+            <button  type='button' onClick={() => savePlaylist()}>Save To Spotify</button>
         </div>
     )
 }

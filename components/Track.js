@@ -1,14 +1,6 @@
 import styles from '../styles/Track.module.css'
-import { useState } from 'react';
-import Playlist from './Playlist';
 
 function Track({ playlist, onHandleRemoveButton }) {
-
-    const playlistReturn = () => {
-        for (let i = 0; i <= playlist.length; i++) {
-            <div>{playlist[i]}</div>
-        }
-    }
 
     return (
         <div className={styles.trackContainer}> 

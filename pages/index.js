@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SearchBar from '../components/SearchBar';
 import Playlist from '../components/Playlist'
 import SearchResults from '../components/SearchResults';
@@ -16,13 +16,11 @@ export default function Home() {
   }
 
   function handleClick() {
-    //const results = findTrack(searchInput)
     const apiResponse = searchTracks(searchInput)
     setResults(apiResponse)
-    }
+  }
 
   //fetch
-
   function searchTracks(query) {
     const accessToken = getAccessToken()
     if (!accessToken) {
@@ -35,7 +33,6 @@ export default function Home() {
     }).then(response => {
       if (response.ok) {
         response.json().then(data => {
-          console.log(data.tracks.items)
           setResults(data.tracks.items);
         })
       }
@@ -89,20 +86,6 @@ export default function Home() {
     window.location = url
   }
 
-  // function findTrack(input) {
-  //   const filteredTracks = tracks.filter(track =>
-  //   (track.name.toLowerCase().includes(input.toLowerCase()) ||
-  //     track.artist.toLowerCase().includes(input.toLowerCase()) ||
-  //     track.album.toLowerCase().includes(input.toLowerCase())
-  //   ));
-  //   const trackList = filteredTracks.map(track => <li key={track.id}>Song Name: {track.name}<br />Artist: {track.artist} Album: {track.album}
-  //     <button type="button" onClick={() => handleAddButton(track.id)}>+</button></li>)
-  //   const trackListUl = <ul>{trackList}</ul>
-  //   if (input.length > 0) {
-  //     return trackListUl
-  //   } //can use this to provide else for non-searches and possibly searches that don't match the track
-  // }
-
   //Playlist, TrackList & Track (Playlist Creation)
   const [playlist, setPlaylist] = useState([])
   const [playlistName, setPlaylistName] = useState('')
@@ -111,9 +94,9 @@ export default function Home() {
     const addTrack = results.find(result => result.uri === trackURI);
     setPlaylist(prevTracks => {
       if (!prevTracks.some(prevTrack => prevTrack.uri === addTrack.uri)) {
-        setPlaylist([...prevTracks, addTrack])
+        return [...prevTracks, addTrack]
       } else {
-        setPlaylist([...prevTracks])
+        return [...prevTracks]
       }
     })
   };
@@ -121,19 +104,78 @@ export default function Home() {
   const handleRemoveButton = (trackURI) => {
     setPlaylist(prevTracks => prevTracks.filter(track => track.uri !== trackURI))
   }
-
   const handlePlaylistName = (newName) => {
     setPlaylistName(newName)
   }
 
-  //Spotify functions
+  //Save Playlist to Spotify
+  async function getUsername() {
+    const accessToken = getAccessToken()
+    if (!accessToken) {
+      throw new Error('Access token not found')
+    }
+    const response = await fetch(`https://api.spotify.com/v1/me`, {
+      headers: {
+        Authorization: 'Bearer ' + accessToken
+      }
+    })
+    const json = await response.json()
+    return json.id;
+  }
 
+  async function postPlaylistData() {
+    const getUserprofile = await getUsername();
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      throw new Error('Access token not found')
+    }
+    const response = await fetch(`https://api.spotify.com/v1/users/${getUserprofile}/playlists`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ` + accessToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "name": playlistName,
+        "description": "New playlist description",
+        "public": false
+      })
+    })
+    const json = await response.json()
+    return json.id
+  }
+
+  async function savePlaylist() {
+    const playlist_id = await postPlaylistData();
+    const user_id = await getUsername();
+    const accessToken = getAccessToken();
+    if (!accessToken) {
+      throw new Error('Access token not found')
+    }
+    const response = await fetch(`https://api.spotify.com/v1/users/${user_id}/playlists/${playlist_id}/tracks`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ` + accessToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({  
+       "uris": uriArray()
+      })
+    })
+    const json = await response.json()
+    return json
+  }
+
+  //Spotify functions
   const uriArray = () => {
+    if (!playlist) {
+      return []; 
+    } else {
     const uriPlaylist = playlist.map(track => track.uri)
     let array = [...uriPlaylist]
-    console.log(array)
+    return array
+    }
   }
-  //uriArray()
 
   return (
     <div className={styles.container}>
@@ -144,8 +186,8 @@ export default function Home() {
       <button onClick={requestAuthorization}>Log In</button>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
       <SearchResults searchResults={results} handleAddButton={handleAddButton} />
-      <Playlist playlist={playlist} uriArray={uriArray} newPlaylist={playlistName} onNewPlaylistName={handlePlaylistName} 
-      onHandleRemoveButton={handleRemoveButton} />
+      <Playlist playlist={playlist} uriArray={uriArray} newPlaylist={playlistName} savePlaylist={savePlaylist} onNewPlaylistName={handlePlaylistName}
+        onHandleRemoveButton={handleRemoveButton} />
     </div>
   );
 }

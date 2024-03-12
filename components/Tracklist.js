@@ -1,5 +1,4 @@
 import styles from '../styles/Tracklist.module.css'
-import { useState } from 'react';
 import Track from '../components/Track.js'
 
 function Tracklist({playlist, onHandleRemoveButton}) {
