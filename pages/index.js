@@ -124,28 +124,6 @@ export default function Home() {
     return json.id;
   }
 
-  // async function postPlaylistData() {
-  //   const getUserprofile = await getUsername();
-  //   const accessToken = getAccessToken();
-  //   if (!accessToken) {
-  //     throw new Error('Access token not found')
-  //   }
-  //   const response = await fetch(`https://api.spotify.com/v1/users/${getUserprofile}/playlists`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Authorization': `Bearer ` + accessToken,
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify({
-  //       "name": playlistName,
-  //       "description": "New playlist description",
-  //       "public": false
-  //     })
-  //   })
-  //   const json = await response.json()
-  //   return json.id
-  // }
-
   async function postPlaylistData() {
     setLoading(true);
     try {
@@ -175,7 +153,7 @@ export default function Home() {
     } catch (error) {
       console.error('Error creating playlist:', error);
     } finally {
-      setLoading(false); // Set isLoading back to false after the request
+      setLoading(false); 
     }
   }
 
@@ -210,9 +188,6 @@ export default function Home() {
     return array
     }
   }
-
-  //Loading Function
-
 
   return (
     <div className={styles.container}>
