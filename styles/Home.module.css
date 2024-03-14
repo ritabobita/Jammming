@@ -40,3 +40,9 @@
   background-color: white;
   color: black
 }
+
+.container .loading {
+  display: flex;
+  margin: 0 auto;
+  font-size: 10rem;
+}

@@ -171,6 +171,7 @@ export default function Home() {
       }
       const json = await response.json();
       console.log('Playlist created:', json);
+      return json.id
     } catch (error) {
       console.error('Error creating playlist:', error);
     } finally {
@@ -216,7 +217,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       {loading ? (
-      <div>Loading...</div>
+      <div className={styles.loading}>Loading...</div>
     ) : (
       <>
       <Head>
