@@ -1,7 +1,7 @@
 import styles from '../styles/Playlist.module.css'
 import Tracklist from '../components/Tracklist';
 
-function Playlist({playlist, onNewPlaylistName, onHandleRemoveButton, savePlaylist, newPlaylist, uriArray}) {
+function Playlist({playlist, onNewPlaylistName, onHandleRemoveButton, savePlaylist}) {
 
     function handleChange(e) {
         const value = e.target.value;

@@ -89,6 +89,7 @@ export default function Home() {
   //Playlist, TrackList & Track (Playlist Creation)
   const [playlist, setPlaylist] = useState([])
   const [playlistName, setPlaylistName] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleAddButton = (trackURI) => {
     const addTrack = results.find(result => result.uri === trackURI);
@@ -123,26 +124,58 @@ export default function Home() {
     return json.id;
   }
 
+  // async function postPlaylistData() {
+  //   const getUserprofile = await getUsername();
+  //   const accessToken = getAccessToken();
+  //   if (!accessToken) {
+  //     throw new Error('Access token not found')
+  //   }
+  //   const response = await fetch(`https://api.spotify.com/v1/users/${getUserprofile}/playlists`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Authorization': `Bearer ` + accessToken,
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //       "name": playlistName,
+  //       "description": "New playlist description",
+  //       "public": false
+  //     })
+  //   })
+  //   const json = await response.json()
+  //   return json.id
+  // }
+
   async function postPlaylistData() {
-    const getUserprofile = await getUsername();
-    const accessToken = getAccessToken();
-    if (!accessToken) {
-      throw new Error('Access token not found')
+    setLoading(true);
+    try {
+      const getUserProfile = await getUsername();
+      const accessToken = getAccessToken();
+      if (!accessToken) {
+        throw new Error('Access token not found');
+      }
+      const response = await fetch(`https://api.spotify.com/v1/users/${getUserProfile}/playlists`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ` + accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "name": playlistName,
+          "description": "New playlist description",
+          "public": false
+        })
+      });
+      if (!response.ok) {
+        throw new Error('Failed to create playlist');
+      }
+      const json = await response.json();
+      console.log('Playlist created:', json);
+    } catch (error) {
+      console.error('Error creating playlist:', error);
+    } finally {
+      setLoading(false); // Set isLoading back to false after the request
     }
-    const response = await fetch(`https://api.spotify.com/v1/users/${getUserprofile}/playlists`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ` + accessToken,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "name": playlistName,
-        "description": "New playlist description",
-        "public": false
-      })
-    })
-    const json = await response.json()
-    return json.id
   }
 
   async function savePlaylist() {
@@ -177,8 +210,15 @@ export default function Home() {
     }
   }
 
+  //Loading Function
+
+
   return (
     <div className={styles.container}>
+      {loading ? (
+      <div>Loading...</div>
+    ) : (
+      <>
       <Head>
         <title>Jammming</title>
         <link rel="icon" href="/favicon.ico" />
@@ -188,8 +228,10 @@ export default function Home() {
       </div>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
       <SearchResults searchResults={results} handleAddButton={handleAddButton} />
-      <Playlist playlist={playlist} uriArray={uriArray} newPlaylist={playlistName} savePlaylist={savePlaylist} onNewPlaylistName={handlePlaylistName}
+      <Playlist playlist={playlist} savePlaylist={savePlaylist} onNewPlaylistName={handlePlaylistName}
         onHandleRemoveButton={handleRemoveButton} />
+        </>
+    )}
     </div>
   );
 }
