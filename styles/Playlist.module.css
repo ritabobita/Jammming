@@ -26,9 +26,13 @@ font-family: "Open Sans", sans-serif;*/
 
 .playlistContainer button {
     display: block;
-    margin: 1rem auto;
+    margin: .75rem auto 1rem auto;
     height: 2rem;
     width: 12rem;
     font-family: "Open Sans", sans-serif;
     font-size: 1rem;
+}
+
+.playlistContainer li p {
+    padding: .25rem;
 }

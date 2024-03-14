@@ -13,17 +13,19 @@ font-family: "Open Sans", sans-serif;*/
     font-family: "Open Sans", sans-serif;
     background-color: #000000;
     grid-area: results;
+    height: 100%;
 }
 
 .resultsContainer h1 {
     color: white;
     text-align: center;
     margin: 1.58rem auto;
-
+    position: sticky;
 }
 
 .results {
     overflow: scroll;
+    max-height: 24rem;
 }
 
 .results ul {
@@ -46,6 +48,10 @@ font-family: "Open Sans", sans-serif;*/
     justify-content: space-between;
     padding: 0rem 1rem;
     margin: 0 1rem 1rem;
+}
+
+.results li p {
+    padding: .25rem;
 }
 
 .results button {

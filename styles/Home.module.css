@@ -1,11 +1,10 @@
 
 .container {
-  min-height: 100vh;
+  min-height: 98vh;
   display: grid;
-  grid-template: repeat(3, 10%) 70% / repeat(4, 25%);
+  grid-template: repeat(2, 15%) 70% / repeat(4, 25%);
   grid-template-areas: "header header header header"
                        "search search search search"
-                       ". searchButton searchButton ."
                        "results results savePlaylist savePlaylist";
                     
   grid-gap: 1rem;
@@ -15,4 +14,29 @@
   justify-content: center;
   align-content: center;
   width: 100%;
+}
+
+.header {
+  display: flex;
+  background-color: black;
+  grid-area: header;
+}
+
+.header button {
+  margin: 0 auto;
+  display: block;
+  min-width: 50%;
+  font-family: "Open Sans", sans-serif;
+  font-size: 3rem;
+  padding: 0;
+  border: 0rem;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0rem 0rem 1.25rem 0rem white;
+}
+
+.header button:active {
+  background-color: white;
+  color: black
 }

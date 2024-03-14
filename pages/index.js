@@ -183,7 +183,9 @@ export default function Home() {
         <title>Jammming</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <button onClick={requestAuthorization}>Log In</button>
+      <div className={styles.header}>
+        <button title="Click to log in to Spotify" onClick={requestAuthorization}>Jammming</button>
+      </div>
       <SearchBar onSearchInputChange={handleSearchInput} onButtonClick={handleClick} />
       <SearchResults searchResults={results} handleAddButton={handleAddButton} />
       <Playlist playlist={playlist} uriArray={uriArray} newPlaylist={playlistName} savePlaylist={savePlaylist} onNewPlaylistName={handlePlaylistName}
