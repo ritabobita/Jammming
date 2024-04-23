@@ -30,7 +30,7 @@ Jammming is a web application that allows users to search the Spotify library, c
 
 ## Collaborators
 
-- [Your Name]
+- Ritabobita
 
 ## License
 
